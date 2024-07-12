@@ -1,1 +1,2 @@
-# Recommended-Products-Metafields
+# Recommended Products  + Metafields
+
