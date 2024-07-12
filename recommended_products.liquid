@@ -1,0 +1,102 @@
+{% if product.metafields.custom.other_products.value != blank %}
+  <h4 class="recommended_products_title">{{ title }} <span class="product_tag_container"><span class="product_tag"></span></span></h4>
+  {% assign recommended_products = product.metafields.custom.other_products.value %}
+  <div class="recommended_products">
+    {% for product in recommended_products %}
+      {% assign last_tag = product.tags | last %}
+      <div class="product_container" data-tag="{{ last_tag }}">
+        <a href="{{ product.url }}">
+          {{ product.featured_image | image_url: width: 400 | image_tag }}
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+ 
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var productContainers = document.querySelectorAll('.product_container');
+
+    productContainers.forEach(function(container) {
+      container.addEventListener('mouseover', function() {
+        var tag = container.getAttribute('data-tag');
+        var tagElement = document.querySelector('.product_tag_container .product_tag');
+        tagElement.textContent = `(${tag})`;
+        tagElement.style.display = 'inline';
+      });
+
+      container.addEventListener('mouseout', function() {
+        var tagElement = document.querySelector('.product_tag_container .product_tag');
+        tagElement.style.display = 'none';
+      });
+    });
+  });
+</script>
+
+
+{% comment %}
+
+{% if product.metafields.custom.other_products.value != blank %}
+  <h4 class="recommended_products_title">{{ title }} <span>({{ product.metafields.custom.productcolor }})</span></h4>
+  {% assign recommended_products = product.metafields.custom.other_products.value %}
+  <div class="recommended_products">
+    {% for product in recommended_products %}
+      <a href="{{ product.url }}">
+        {{ product.featured_image | image_url: width: 400 | image_tag }}
+      </a>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% endcomment %}
+<style>
+
+  
+
+  .recommended_products .product_container {
+    position: relative;
+    display: inline-block;
+    flex-basis: 80px;
+  }
+
+  .recommended_products .product_tag_container .product_tag {
+    display: none;
+    font-size: 14px;
+    color: #000;
+  }
+
+  .product_container:hover .product_tag_container .product_tag {
+    display: inline;
+  }
+  
+    .recommended_products_title{
+      font-family: Poppins;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 32px;
+      color:#151414;
+      margin-bottom: 10px;
+
+    }
+    .recommended_products{
+        display: flex;
+      flex-wrap:wrap;
+      gap:20px;
+      margin-bottom: 30px;
+    }
+    .recommended_products a{
+      flex-basis: 80px;
+    }
+    .recommended_products a img {
+      width: 100%;
+      height: 80px;
+      object-fit: cover;
+      border: 1px solid transparent;
+      transition-duration:0.3s;
+      border-radius: 10px; 
+  }
+    .recommended_products a img:hover {
+      border: 1px solid #8B9B7F;
+  }
+</style>
